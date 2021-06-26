@@ -7,8 +7,22 @@ import uvicorn
 
 
 from AR_Copy_Paste.routers import mobile_api, web_app
-app = FastAPI()
+from fastapi.middleware.cors import CORSMiddleware
 
+
+app = FastAPI()
+origins = [
+    'http://localhost',
+    'http://localhost:8000',
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 
 
 app.mount('/static', StaticFiles(directory='./AR_Copy_Paste/static'), name='static')
