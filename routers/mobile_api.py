@@ -6,25 +6,15 @@ from PIL import Image
 from io import BytesIO
 from rembg.bg import remove
 import numpy as np
-<<<<<<< HEAD
 from AR_Copy_Paste.dependencies import get_db,bucket_name, get_db, s3_bucket
 import pytesseract
 from AR_Copy_Paste.models.text_model import TextDB
-=======
-import pytesseract
-from AR_Copy_Paste.dependencies import bucket_name, s3_bucket
-
-
-
-
->>>>>>> 730de0ac1f8a0e5ab0880338458e44e2eb029de8
 
 router = APIRouter()
 
 
 
 @router.post('/api/extract_text')
-<<<<<<< HEAD
 async def extract_text(photo: UploadFile = File(...), db: Session = Depends(get_db)):
     img = Image.open(BytesIO(await photo.read()))
     img_text = pytesseract.image_to_string(img)
@@ -45,16 +35,7 @@ async def extract_text(photo: UploadFile = File(...), db: Session = Depends(get_
             )
         db.add(new_content)
         db.commit()
-=======
-async def extract_text(photo: UploadFile = File(...)):
-    img = Image.open(BytesIO(await photo.read()))
-    img_text = pytesseract.image_to_string(img)
-    print(img_text)
 
-    pdf = pytesseract.image_to_pdf_or_hocr(img, extension='pdf')
-    with open('test.pdf', 'w+b') as f:
-        f.write(pdf) # pdf type is bytes by default
->>>>>>> 730de0ac1f8a0e5ab0880338458e44e2eb029de8
 
     return{
         "success":True,
