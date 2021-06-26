@@ -1,12 +1,133 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
+<script>
+  function deleteText(id) {
+    fetch("https://e6721e636491.ngrok.io/api/delete_text", {
+      method: "Delete",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        delId: id,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.log(response.status);
+        }
+        location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {});
+
+    
+  }
+
+  function deleteImg(link) {
+
+    fetch("https://e6721e636491.ngrok.io/api/delete_img", {
+      method: "Delete",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        delUrl: link,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          console.log(response.status);
+        }
+        location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {});
+  }
+</script>
 <body>
-  <!-- ... -->
-  {{foo}}
+  <div
+    class="sticky fixed h-12 z-50 top-0 w-screen grid grid-cols-2 gap-4 content-center justify-items-center my-4 bg-white">
+    <div class="text-center font-bold text-yellow-500">
+      Text
+    </div>
+
+
+    <div class="text-center font-bold text-indigo-500">
+      Objects
+    </div>
+
+
+  </div>
+
+  <div class="grid grid-cols-2 gap-4 content-center justify-items-center m-8">
+    <div class="mt-8">
+      {% for text in text_list%}
+      <div class="border-2 border-yellow-500 p-2">
+        <span style="white-space: pre-line">{{text}}</span>
+        <div class="my-2">
+          <div class="cursor-pointer" onclick="deleteText({{text_ids[loop.index-1]}})">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 172 172"
+              style=" fill:#000000;">
+              <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                style="mix-blend-mode: normal">
+                <path d="M0,172v-172h172v172z" fill="none"></path>
+                <g fill="#EF4444">
+                  <path
+                    d="M74.53333,17.2c-1.53406,-0.02082 -3.01249,0.574 -4.10468,1.65146c-1.09219,1.07746 -1.70703,2.54767 -1.70704,4.08187h-34.32161c-2.06765,-0.02924 -3.99087,1.05709 -5.03322,2.843c-1.04236,1.78592 -1.04236,3.99474 0,5.78066c1.04236,1.78592 2.96558,2.87225 5.03322,2.843h103.2c2.06765,0.02924 3.99087,-1.05709 5.03322,-2.843c1.04236,-1.78592 1.04236,-3.99474 0,-5.78066c-1.04236,-1.78592 -2.96558,-2.87225 -5.03322,-2.843h-34.32161c-0.00001,-1.53421 -0.61486,-3.00442 -1.70704,-4.08187c-1.09219,-1.07746 -2.57061,-1.67228 -4.10468,-1.65146zM34.4,45.86667v91.73333c0,6.33533 5.13133,11.46667 11.46667,11.46667h80.26667c6.33533,0 11.46667,-5.13133 11.46667,-11.46667v-91.73333z">
+                  </path>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="mt-8">
+      <img />
+      {% for img in img_list%}
+      <div class="border-2 border-indigo-500 p-2">
+        <img src="{{img}}" class="w-1/2 mx-auto" />
+        <div class="my-2">
+          <div class="cursor-pointer" onclick="deleteImg( '{{img}}' )">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 172 172"
+              style=" fill:#000000;">
+              <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                style="mix-blend-mode: normal">
+                <path d="M0,172v-172h172v172z" fill="none"></path>
+                <g fill="#EF4444">
+                  <path
+                    d="M74.53333,17.2c-1.53406,-0.02082 -3.01249,0.574 -4.10468,1.65146c-1.09219,1.07746 -1.70703,2.54767 -1.70704,4.08187h-34.32161c-2.06765,-0.02924 -3.99087,1.05709 -5.03322,2.843c-1.04236,1.78592 -1.04236,3.99474 0,5.78066c1.04236,1.78592 2.96558,2.87225 5.03322,2.843h103.2c2.06765,0.02924 3.99087,-1.05709 5.03322,-2.843c1.04236,-1.78592 1.04236,-3.99474 0,-5.78066c-1.04236,-1.78592 -2.96558,-2.87225 -5.03322,-2.843h-34.32161c-0.00001,-1.53421 -0.61486,-3.00442 -1.70704,-4.08187c-1.09219,-1.07746 -2.57061,-1.67228 -4.10468,-1.65146zM34.4,45.86667v91.73333c0,6.33533 5.13133,11.46667 11.46667,11.46667h80.26667c6.33533,0 11.46667,-5.13133 11.46667,-11.46667v-91.73333z">
+                  </path>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+
+  </div>
+
 </body>
+
 </html>
