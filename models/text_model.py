@@ -1,6 +1,6 @@
 from sqlalchemy import Column
 import sqlalchemy
-from AR_copy_Paste.dependencies import Base
+from AR_Copy_Paste.dependencies import Base
 
 class TextDB(Base):
 
