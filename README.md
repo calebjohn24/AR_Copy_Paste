@@ -2,10 +2,10 @@
 
 ## An AI powered clipboard to copy and paste objects and text from the real world
 
-<img width="350">
+<img src="" width="350">
 
 ### Web clipboard for easy access to clipped objects and text
-<img>
+<img src="https://raw.githubusercontent.com/calebjohn24/AR_Copy_Paste/master/clipboard.png">
 
 
 
