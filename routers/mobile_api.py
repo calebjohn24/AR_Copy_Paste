@@ -6,8 +6,10 @@ from PIL import Image
 from io import BytesIO
 from rembg.bg import remove
 import numpy as np
-from AR_Copy_Paste.dependencies import get_db,bucket_name, get_db, s3_bucket
-from starlette.responses import StreamingResponse
+import pytesseract
+from AR_Copy_Paste.dependencies import bucket_name, s3_bucket
+
+
 
 
 
@@ -16,20 +18,22 @@ router = APIRouter()
 
 
 @router.post('/api/extract_text')
-async def extract_text(photo: UploadFile = File(...), db: Session = Depends(get_db)):
-    Image.open(BytesIO(await photo.read()))
-    file_token = str(uuid.uuid4())
-    s3_bucket.put_object(Bucket=bucket_name, Key= file_token +'.jpg',
-                                 Body=photo.file,
-                                 ACL='private',
-            )
+async def extract_text(photo: UploadFile = File(...)):
+    img = Image.open(BytesIO(await photo.read()))
+    img_text = pytesseract.image_to_string(img)
+    print(img_text)
+
+    pdf = pytesseract.image_to_pdf_or_hocr(img, extension='pdf')
+    with open('test.pdf', 'w+b') as f:
+        f.write(pdf) # pdf type is bytes by default
 
     return{
-        "success":True
+        "success":True,
+        'img_text':img_text
     }
 
 @router.post('/api/extract_object')
-async def extract_object(photo: UploadFile = File(...), db: Session = Depends(get_db)):
+async def extract_object(photo: UploadFile = File(...)):
     result = remove(await photo.read(), alpha_matting=True)
     result_img = Image.open(BytesIO(result)).convert("RGBA")
     result_img.save("tmp.png")
