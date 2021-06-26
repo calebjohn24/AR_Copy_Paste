@@ -75,12 +75,15 @@ def view_data(db: Session = Depends(get_db)):
     text = []
 
     response = s3_bucket.list_objects(Bucket=bucket_name)
-    for obj in response['Contents']:
-        url = s3_bucket.generate_presigned_url(ClientMethod='get_object',
-                                               Params={'Bucket': bucket_name,
-                                                       'Key': obj['Key']},
-                                               ExpiresIn=3600)
-        images.append(url)
+    try:
+        for obj in response['Contents']:
+            url = s3_bucket.generate_presigned_url(ClientMethod='get_object',
+                                                Params={'Bucket': bucket_name,
+                                                        'Key': obj['Key']},
+                                                ExpiresIn=3600)
+            images.append(url)
+    except KeyError:
+        pass
     
     text = db.query(TextDB).all()
     text = text[::-1]
