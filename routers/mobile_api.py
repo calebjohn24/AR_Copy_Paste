@@ -48,5 +48,6 @@ async def extract_object(photo: UploadFile = File(...), db: Session = Depends(ge
                                                ExpiresIn=1200)
     print(url)
     return{
+        'success':True,
         'url':url
     }
