@@ -1,8 +1,8 @@
-# AR Copy Paste
+# <a href="https://youtu.be/SA_9b2Vizdg">AR Copy Paste</a>
 
 ## An AI powered clipboard to copy and paste objects and text from the real world
 
-<img src="" width="350">
+[![DEMO](https://img.youtube.com/vi/SA_9b2Vizdg/0.jpg)](https://www.youtube.com/watch?v=SA_9b2Vizdg)
 
 ### Web clipboard for easy access to clipped objects and text
 <img src="https://raw.githubusercontent.com/calebjohn24/AR_Copy_Paste/master/clipboard.png">
